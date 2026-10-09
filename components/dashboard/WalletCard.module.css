@@ -1,0 +1,29 @@
+.card {
+  min-height: 132px;
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-inverse);
+}
+
+.NGN {
+  background: var(--color-wallet-ngn);
+}
+
+.USD {
+  background: var(--color-wallet-usd);
+}
+
+.GHS {
+  background: var(--color-wallet-ghs);
+}
+
+.label {
+  font-size: var(--text-sm);
+  opacity: 0.85;
+}
+
+.balance {
+  margin-top: var(--space-3);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+}

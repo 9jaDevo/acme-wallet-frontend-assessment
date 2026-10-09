@@ -1,0 +1,18 @@
+.dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+
+.successful {
+  background: var(--color-success);
+}
+
+.pending {
+  background: var(--color-warning);
+}
+
+.failed {
+  background: var(--color-danger);
+}
