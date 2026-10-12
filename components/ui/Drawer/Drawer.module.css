@@ -18,6 +18,10 @@
   box-shadow: var(--shadow-overlay);
 }
 
+.handle {
+  display: none;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -41,6 +45,8 @@
   border-radius: var(--radius-md);
   color: var(--color-text-muted);
   cursor: pointer;
+  border: 0;
+  background: transparent;
 }
 
 .close:hover {
@@ -65,5 +71,21 @@
     width: 100%;
     max-height: 90vh;
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  .handle {
+    display: block;
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    width: 36px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--color-border-strong);
+    transform: translateX(-50%);
+  }
+
+  .header {
+    padding-top: var(--space-8);
   }
 }

@@ -1,4 +1,4 @@
-import type { SelectHTMLAttributes } from 'react'
+import { useId, type SelectHTMLAttributes } from 'react'
 import { cx } from '@/lib/cx'
 import { Field } from '../Field'
 import { Icon } from '../Icon'
@@ -7,6 +7,7 @@ import styles from './Select.module.css'
 export interface SelectOption {
   value: string
   label: string
+  disabled?: boolean
 }
 
 export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
@@ -17,12 +18,14 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
 }
 
 export function Select({ label, hideLabel, options, fieldClassName, className, ...rest }: SelectProps) {
+  const generatedId = useId()
+  const selectId = rest.id ?? generatedId
   return (
-    <Field label={label} hideLabel={hideLabel} className={fieldClassName}>
+    <Field label={label} htmlFor={selectId} hideLabel={hideLabel} className={fieldClassName}>
       <div className={styles.control}>
-        <select className={cx(styles.select, className)} {...rest}>
+        <select id={selectId} className={cx(styles.select, className)} {...rest}>
           {options.map((option) => (
-            <option key={option.value} value={option.value}>
+            <option key={option.value} value={option.value} disabled={option.disabled}>
               {option.label}
             </option>
           ))}

@@ -20,6 +20,8 @@ export interface TransactionQuery {
   from?: string
   /** YYYY-MM-DD, inclusive, UTC */
   to?: string
+  /** Mock API diagnostic scenario, preserved from the page URL. */
+  __scenario?: 'slow' | 'error' | 'empty'
 }
 
 function toSearchParams(query: object): string {
