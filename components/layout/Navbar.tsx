@@ -1,5 +1,6 @@
 'use client'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { cx } from '@/lib/cx'
 import { UserMenu } from './UserMenu'
 import styles from './Navbar.module.css'
@@ -11,7 +12,7 @@ const LINKS = [
 ]
 
 export function Navbar() {
-  const pathname = typeof window !== 'undefined' ? window.location.pathname : ''
+  const pathname = usePathname()
 
   return (
     <header className={styles.navbar}>
@@ -25,6 +26,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               className={cx(styles.link, pathname === link.href && styles.active)}
+              aria-current={pathname === link.href ? 'page' : undefined}
             >
               {link.label}
             </Link>
@@ -32,6 +34,18 @@ export function Navbar() {
         </nav>
         <UserMenu />
       </div>
+      <nav className={styles.mobileLinks} aria-label="Main">
+        {LINKS.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            className={cx(styles.mobileLink, pathname === link.href && styles.mobileActive)}
+            aria-current={pathname === link.href ? 'page' : undefined}
+          >
+            {link.label}
+          </Link>
+        ))}
+      </nav>
     </header>
   )
 }

@@ -1,4 +1,4 @@
-import type { ApiSuccess } from '@/types/api'
+import type { ApiErrorBody, ApiSuccess } from '@/types/api'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? '/api'
 
@@ -14,16 +14,34 @@ export class ApiError extends Error {
 }
 
 async function request<T>(path: string, init: RequestInit = {}): Promise<ApiSuccess<T>> {
-  const res = await fetch(`${BASE_URL}${path}`, {
+  const response = await fetch(`${BASE_URL}${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
       ...init.headers,
     },
   })
-  const body = await res.json()
-  console.log('[api]', path, body)
-  return body
+  let body: unknown
+  try {
+    body = await response.json()
+  } catch {
+    throw new ApiError(response.status, 'INVALID_RESPONSE', 'The server returned an invalid response.')
+  }
+
+  if (!response.ok) {
+    const error = body as Partial<ApiErrorBody>
+    throw new ApiError(
+      response.status,
+      error.error?.code ?? 'REQUEST_FAILED',
+      error.error?.message ?? 'The request could not be completed.'
+    )
+  }
+
+  if (!body || typeof body !== 'object' || !('data' in body)) {
+    throw new ApiError(response.status, 'INVALID_RESPONSE', 'The server returned an invalid response.')
+  }
+
+  return body as ApiSuccess<T>
 }
 
 export const api = {

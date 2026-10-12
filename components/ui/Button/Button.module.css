@@ -11,6 +11,7 @@
   white-space: nowrap;
   cursor: pointer;
   user-select: none;
+  font-family: inherit;
   transition:
     background-color var(--duration-fast) var(--ease-out),
     border-color var(--duration-fast) var(--ease-out);

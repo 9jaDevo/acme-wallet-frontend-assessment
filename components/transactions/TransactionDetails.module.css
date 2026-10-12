@@ -1,0 +1,144 @@
+.summaryHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+}
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-weight: var(--weight-semibold);
+}
+.summaryHero p {
+  margin-top: var(--space-4);
+  color: var(--color-text-muted);
+}
+.heroAmount {
+  margin: var(--space-2) 0;
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+}
+.section {
+  margin-top: var(--space-6);
+}
+.section h3 {
+  margin-bottom: var(--space-3);
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+}
+.section dl {
+  display: grid;
+  gap: var(--space-3);
+}
+.section dl > div {
+  display: grid;
+  grid-template-columns: minmax(100px, 0.7fr) minmax(0, 1.3fr);
+  gap: var(--space-3);
+}
+.section dt {
+  color: var(--color-text-muted);
+}
+.section dd {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+.section code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+.section dd button {
+  border: 0;
+  background: transparent;
+  color: var(--color-text-subtle);
+  cursor: pointer;
+}
+.section .total {
+  margin-top: 2px;
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--color-border-strong);
+  font-weight: var(--weight-bold);
+}
+.section .total dt {
+  color: var(--color-text);
+}
+.notFound {
+  display: flex;
+  min-height: 360px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.notFound > span {
+  display: inline-flex;
+  padding: var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+.notFound .danger {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+.notFound h3 {
+  margin-top: var(--space-4);
+  font-size: var(--text-md);
+}
+.notFound p {
+  margin: var(--space-1) 0 var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+.detailsSkeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+.detailsSkeleton i,
+.detailsSkeleton .skeletonCircle {
+  display: block;
+  width: 90px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.detailsSkeleton .skeletonCircle {
+  width: 48px;
+  height: 48px;
+}
+.detailsSkeleton .wide {
+  width: 180px;
+  height: 20px;
+}
+.detailsSkeleton hr {
+  width: 100%;
+  margin: var(--space-4) 0;
+  border: 0;
+  border-top: 1px solid var(--color-border);
+}
+.detailsSkeleton div {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}

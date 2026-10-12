@@ -1,7 +1,8 @@
 import type { Transaction, TransactionType } from '@/types/api'
 import { Icon, type IconName, Money } from '@/components/ui'
-import { formatDateTime, TRANSACTION_TYPE_LABELS } from '@/lib/format'
-import { StatusDot } from './StatusDot'
+import { formatTime, TRANSACTION_TYPE_LABELS } from '@/lib/format'
+import { isCreditTransaction } from '@/lib/transactions'
+import { TransactionStatusBadge } from './TransactionStatusBadge'
 import styles from './TransactionRow.module.css'
 
 const TYPE_ICONS: Record<TransactionType, IconName> = {
@@ -14,26 +15,31 @@ const TYPE_ICONS: Record<TransactionType, IconName> = {
   bill_payment: 'receipt',
 }
 
-const CREDIT_TYPES: TransactionType[] = ['deposit', 'transfer_in', 'conversion']
-
 export interface TransactionRowProps {
   transaction: Transaction
   onSelect?: (transaction: Transaction) => void
 }
 
 export function TransactionRow({ transaction: tx, onSelect }: TransactionRowProps) {
-  const isCredit = CREDIT_TYPES.includes(tx.type)
+  const isCredit = isCreditTransaction(tx.type)
+  const initials = tx.counterparty
+    ?.split(/\s+/)
+    .map((part) => part[0])
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+  const useInitials = (tx.type === 'transfer_in' || tx.type === 'transfer_out') && initials
 
   return (
     <button type="button" className={styles.row} onClick={() => onSelect?.(tx)}>
-      <span className={styles.icon}>
-        <Icon name={TYPE_ICONS[tx.type]} size={18} />
+      <span className={styles.icon} aria-hidden>
+        {useInitials ? initials : <Icon name={TYPE_ICONS[tx.type]} size={18} />}
       </span>
       <span className={styles.main}>
         <span className={styles.title}>{TRANSACTION_TYPE_LABELS[tx.type]}</span>
-        <span className={styles.narration} dangerouslySetInnerHTML={{ __html: tx.narration }} />
+        <span className={styles.narration}>{tx.narration}</span>
       </span>
-      <StatusDot status={tx.status} />
+      <TransactionStatusBadge status={tx.status} className={styles.status} />
       <span className={styles.end}>
         <Money
           amount={tx.amount}
@@ -41,10 +47,7 @@ export function TransactionRow({ transaction: tx, onSelect }: TransactionRowProp
           sign={isCredit ? 'credit' : 'debit'}
           className={isCredit ? styles.credit : styles.amount}
         />
-        <span className={styles.meta}>
-          {formatDateTime(tx.createdAt)}
-          {tx.fee > 0 && ` · Fee ₦${tx.fee}`}
-        </span>
+        <span className={styles.meta}>{formatTime(tx.createdAt)}</span>
       </span>
     </button>
   )
